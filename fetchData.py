@@ -1,3 +1,8 @@
+import logging
+
+logging.basicConfig(filename='url_extractor.log', level=logging.INFO)
+
+
 def addFx(element):
     str = ""
     for value in element:
@@ -30,6 +35,7 @@ def generate_see_Also(lst):
 
     return (seeAlsolst)
 
+
 class WorkFx:
 
     def __init__(self, url, data_json):
@@ -37,17 +43,30 @@ class WorkFx:
         self.data_json = data_json
 
     def getPageID(self):
+        """
+        This method will find pageID of link entered by user
+        :return:
+        """
         temp = (self.data_json['query']['pages'])
 
         pageId = None
         for el in temp:
             pageId = el
 
+        logging.info('Page ID Fx: ' + format(str(pageId)))
+
         return pageId
 
     def getSeeAlso(self, pageId):
+        """
+        This method will generate See also sugesstion of shared URL
+        :param pageId:
+        :return:
+        """
         temp = (self.data_json['query']['pages'])
         subURL = (temp[str(pageId)]['revisions'][0]['*'])
         lst = subURL.split('\n')
         keyList = generate_see_Also(lst)
+        logging.info('See Also Fx List:' + format(str(keyList)))
+
         return keyList
