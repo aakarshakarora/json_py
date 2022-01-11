@@ -3,9 +3,20 @@ import json
 from seeAlso_function import generate_see_Also
 from urlValidate import urlvalidation, urlName
 
-keySearch = "SMALL"
-url = urlName(keySearch)
-print("Current URL is: ", urlvalidation(url))
+
+testUrl = False
+
+while not testUrl:
+    try:
+        url = input("Enter URL: ")
+
+        if urlvalidation(url):
+            testUrl = urlvalidation(url)
+        else:
+            print("Enter Valid Url")
+
+    except ValueError:
+        print("Enter Valid URL")
 
 response = urlopen(url)
 data_json = json.loads(response.read())
